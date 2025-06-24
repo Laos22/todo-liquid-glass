@@ -1,0 +1,37 @@
+import React from 'react';
+import { FaTrash } from 'react-icons/fa'; // FontAwesome
+import { MdEdit } from 'react-icons/md';   // Material Design
+import '../styles/liquid-glass.css';
+
+export const TaskCard = ({ title, description }) => {
+
+  // console.log("render TaskCard")
+  return (
+    <div className="flex liquid-glass p-6 m-4">
+      <div className='flex-1'>
+        <h3 className="text-xl font-semibold">{title}</h3>
+        <p className="text-opacity-80">{description}</p>
+      </div>
+      <div className='flex flex-col p-2 text-gray-600 text-xs mt-2'>
+        <span>Создано:</span>
+        <span>23.05.2024</span>
+        <span className='mt-2'>Исполнение:</span>
+        <span>23.05.2024</span>
+      </div>
+      <div className='flex flex-col justify-center'>
+        <button 
+          className="p-2 rounded-full hover:bg-gray-100"
+          onClick={() => alert("delete")}
+          >
+          <FaTrash/>
+        </button>
+        <button 
+          className="p-2 rounded-full hover:bg-gray-100"
+          onClick={() => alert("Edit")}
+          >
+          <MdEdit/>
+        </button>
+      </div>
+    </div>
+  );
+};
