@@ -7,11 +7,12 @@ const tasksSlice = createSlice({
   name: 'tasks',
   initialState,
   reducers: {
-    addTask: (state, action) => {
-      state.push(action.payload);
+    addTask: (tasks, action) => {
+      tasks.push(action.payload);
     },
-    removeTask: (state, action) => {
-      state.items = state.items.filter(task => task.id !== action.payload);
+    removeTask: (tasks, action) => {
+      console.log("del: " + action.payload)
+      return tasks.filter(task => task.id !== action.payload);
     },
   },
 });

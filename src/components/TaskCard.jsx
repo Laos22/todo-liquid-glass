@@ -1,10 +1,12 @@
-import React from 'react';
 import { FaTrash } from 'react-icons/fa'; // FontAwesome
 import { MdEdit } from 'react-icons/md';   // Material Design
+import { useDispatch } from 'react-redux';
+import { removeTask } from '../features/tasks/tasksSlice';
+
 import '../styles/liquid-glass.css';
 
-export const TaskCard = ({ title, description }) => {
-
+export const TaskCard = ({ title, description, id }) => {
+  const dispatch = useDispatch()
   // console.log("render TaskCard")
   return (
     <div className="flex liquid-glass p-6 m-4">
@@ -21,7 +23,7 @@ export const TaskCard = ({ title, description }) => {
       <div className='flex flex-col justify-center'>
         <button 
           className="p-2 rounded-full hover:bg-gray-100"
-          onClick={() => alert("delete")}
+          onClick={() => dispatch(removeTask(id))}
           >
           <FaTrash/>
         </button>
