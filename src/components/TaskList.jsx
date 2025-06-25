@@ -12,7 +12,7 @@ export default function TaskList() {
   return (
     <div className="space-y-4 flex-1 overflow-y-auto mt-6">
       {tasks.map(task => (
-        <TaskCard key={task.id} id={task.id} title={task.title} description={task.description} />
+        <TaskCard key={task.id} {...task} />
 
 
         // <div
