@@ -11,9 +11,9 @@ export const TaskCard = ({ title, description, id, dueDate, checked, dateCreated
   const dispatch = useDispatch()
   // const [isChecked, setIsChecked] = useState(checked)
   return (
-    <div className="flex liquid-glass p-6 m-4">
+    <div className="flex liquid-glass p-3 m-3">
       <input
-        className='w-5 h-5 mr-4' 
+        className='w-5 h-5 m-3' 
         type="checkbox"
         onChange={() => {
           // setIsChecked(!isChecked)
@@ -24,12 +24,12 @@ export const TaskCard = ({ title, description, id, dueDate, checked, dateCreated
         <h3 className={`text-xl font-semibold ${checked ? 'line-through' : ''}`}>{title}</h3>
         <p className={`text-opacity-80 ${checked ? 'line-through' : ''}`}>{description}</p>
       </div>
-      <div className='flex flex-col p-2 text-gray-600 text-xs mt-2'>
+      <div className='flex flex-col p-1 text-gray-600 text-xs mt-1'>
         <span className='font-bold'>Создано:</span>
         <span>{new Date(dateCreated).toLocaleDateString()}</span>
         {dueDate ? (
           <>
-            <span className='mt-2 font-bold'>Исполнение:</span>
+            <span className='mt-1 font-bold'>Исполнение:</span>
             <span>{dueDate}</span>
           </>
         ): null}
@@ -37,13 +37,13 @@ export const TaskCard = ({ title, description, id, dueDate, checked, dateCreated
       </div>
       <div className='flex flex-col justify-start'>
         <button 
-          className="p-2 rounded-full hover:bg-gray-100"
+          className="p-1 rounded-full hover:bg-gray-100"
           onClick={() => dispatch(removeTask(id))}
           >
           <FaTrash/>
         </button>
         <button 
-          className="p-2 rounded-full hover:bg-gray-100"
+          className="p-1 rounded-full hover:bg-gray-100"
           onClick={() => dispatch(openModalEdit(id))}
           >
           <MdEdit/>

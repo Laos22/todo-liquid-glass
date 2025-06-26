@@ -10,7 +10,7 @@ export default function TaskList() {
 
   // console.log("render TaskList")
   return (
-    <div className="space-y-4 flex-1 overflow-y-auto mt-6">
+    <div className="space-y-4 flex-1 overflow-y-auto mt-2">
       {tasks.map(task => (
         <TaskCard key={task.id} {...task} />
 
