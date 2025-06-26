@@ -14,6 +14,12 @@ const tasksSlice = createSlice({
       console.log("del: " + action.payload)
       return tasks.filter(task => task.id !== action.payload);
     },
+    toggleCheckedTask: (state, action) => {
+      const task = state.find(task => task.id === action.payload);
+      if (task) {
+        task.checked = !task.checked;
+      }
+    },
     editTask: (tasks, action) => {
       console.log("edit: " + action.payload.id)
       return tasks.map(task =>
@@ -23,5 +29,5 @@ const tasksSlice = createSlice({
   },
 });
 
-export const { addTask, removeTask, editTask } = tasksSlice.actions;
+export const { addTask, removeTask, editTask, toggleCheckedTask } = tasksSlice.actions;
 export default tasksSlice.reducer;
