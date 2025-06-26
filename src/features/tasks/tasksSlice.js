@@ -22,8 +22,9 @@ const tasksSlice = createSlice({
     },
     editTask: (tasks, action) => {
       console.log("edit: " + action.payload.id)
+      // const {id, title, description, dueDate} =action
       return tasks.map(task =>
-        task.id === action.payload.id ? action.payload : task
+        task.id === action.payload.id ? {...task, ...action.payload} : task
       );
     }
   },
