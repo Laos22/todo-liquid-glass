@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 const Layout = () => {
   const dispatch = useDispatch();
   const showModal = useSelector((state) => state.modal.show);
+
   // console.log("render Layout")
   return (
     <div className="flex min-h-screen bg-gradient-to-br from-blue-100 to-purple-100 max-h-[100vh]">
