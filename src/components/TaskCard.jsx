@@ -21,19 +21,14 @@ export const TaskCard = ({ title, description, id, dueDate, checked, dateCreated
         }} 
         checked={checked}/>
       <div className='flex-1 flex flex-col justify-center'>
-        <h3 className={`text-xl font-semibold ${checked ? 'line-through' : ''}`}>{title}</h3>
-        <p className={`text-opacity-80 ${checked ? 'line-through' : ''}`}>{description}</p>
+        <h3 className={`text-xl font-semibold`}>{title}</h3>
+        <p className={`text-opacity-80`}>{description}</p>
       </div>
       <div className='flex flex-col p-1 text-gray-600 text-xs mt-1'>
         <span className='font-bold'>Создано:</span>
         <span>{new Date(dateCreated).toLocaleDateString()}</span>
-        {dueDate ? (
-          <>
-            <span className='mt-1 font-bold'>Исполнение:</span>
-            <span>{dueDate}</span>
-          </>
-        ): null}
-        
+        <span className='mt-1 font-bold'>Исполнение:</span>
+        <span>{dueDate ? new Date(dueDate).toLocaleDateString() : 'Не указано'}</span>
       </div>
       <div className='flex flex-col justify-start'>
         <button 

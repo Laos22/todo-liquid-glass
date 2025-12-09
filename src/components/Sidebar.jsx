@@ -3,12 +3,18 @@ import { CalendarDays, CalendarClock, CheckCircle, ChevronLeft, ChevronRight } f
 import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleSideBar } from '../features/sideBar/sideBarSlice';
+import { setFilter } from '../features/filter/filterSlice';
 
 export default function Sidebar() {
-  const collapsed = useSelector(state => state.sideBar);
+  const collapsed = useSelector((state) => state.sideBar);
+  const filter = useSelector((state) => state.filter);
   const dispatch = useDispatch();
 
-  // console.log("render Sidebar")
+  const items = [
+    { key: 'all', label: 'Все задачи', Icon: CalendarDays },
+    { key: 'active', label: 'Активные', Icon: CalendarClock },
+    { key: 'completed', label: 'Выполненные', Icon: CheckCircle },
+  ];
   return (
     <motion.aside
       initial={{ width: collapsed ? 64 : 256 }}
@@ -27,28 +33,20 @@ export default function Sidebar() {
       </div>
 
       <ul className="space-y-3 animate-[fade]">
-        <li>
-          <a
-            href="#"
-            className="flex items-center text-gray-700 hover:text-black"
-          >
-            <CalendarDays className="mr-2" size={18} />
-            {!collapsed && 'Сегодня'}
-          </a>
-        </li>
-        <li>
-          <a href="#" className="flex items-center text-gray-700 hover:text-black">
-            <CalendarClock className="mr-2" size={18} />
-            {!collapsed && 'Календарь'}
-          </a>
-        </li>
-        <li>
-          <a href="#" className="flex items-center text-gray-700 hover:text-black">
-            <CheckCircle className="mr-2" size={18} />
-            {!collapsed && 'Выполненные'}
-          </a>
-        </li>
+        {items.map(({ key, label, Icon }) => (
+          <li key={key}>
+            <button
+              type="button"
+              onClick={() => dispatch(setFilter(key))}
+              className={`flex items-center w-full text-left ${filter === key ? 'text-blue-700 font-semibold' : 'text-gray-700 hover:text-black'}`}
+            >
+              <Icon className="mr-2" size={18} />
+              {!collapsed && label}
+            </button>
+          </li>
+        ))}
       </ul>
     </motion.aside>
   );
 }
+

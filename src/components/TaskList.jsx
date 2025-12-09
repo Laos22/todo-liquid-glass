@@ -2,28 +2,23 @@ import { useSelector } from 'react-redux';
 import { TaskCard } from './TaskCard';
 
 export default function TaskList() {
-  const tasks = useSelector(state => state.tasks);
+  const tasks = useSelector((state) => state.tasks);
+  const filter = useSelector((state) => state.filter);
 
-  if (tasks.length === 0) {
+  const filteredTasks = tasks.filter((task) => {
+    if (filter === 'active') return !task.checked;
+    if (filter === 'completed') return task.checked;
+    return true;
+  });
+
+  if (filteredTasks.length === 0) {
     return <p className="text-gray-600 mt-5 text-center">Нет задач</p>;
   }
 
-  // console.log("render TaskList")
   return (
     <div className="space-y-4 flex-1 overflow-y-auto mt-2">
-      {tasks.map(task => (
+      {filteredTasks.map((task) => (
         <TaskCard key={task.id} {...task} />
-
-
-        // <div
-        //   key={task.id}
-        //   className="bg-white/50 backdrop-blur-md p-4 rounded shadow text-gray-800"
-        // >
-        //   <h3 className="text-lg font-semibold">{task.title}</h3>
-        //   {task.description && (
-        //     <p className="text-sm text-gray-700">{task.description}</p>
-        //   )}
-        // </div>
       ))}
     </div>
   );
