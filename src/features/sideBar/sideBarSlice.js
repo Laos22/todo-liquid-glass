@@ -4,12 +4,16 @@ const saved = localStorage.getItem('sideBar');
 
 const sideBarSlice = createSlice({
     name: "sideBar",
-    initialState: saved ? JSON.parse(saved): false,
+    initialState: saved ? JSON.parse(saved) : false,
     reducers: {
-        toggleSideBar: (prev => !prev)
+        // state here is a primitive boolean. Immer allows returning
+        // a new primitive value — so return the toggled boolean.
+        toggleSideBar: (state) => {
+            return !state;
+        }
     }
-})
+});
 
-export const {toggleSideBar} = sideBarSlice.actions;
+export const { toggleSideBar } = sideBarSlice.actions;
 
 export default sideBarSlice.reducer;
