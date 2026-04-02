@@ -1,0 +1,28 @@
+# Зависимости (самая тяжелая папка, обязательна к исключению)
+node_modules/
+
+# Папки сборки (готовый скомпилированный код)
+dist/
+build/
+out/
+
+# Системные папки и контроль версий
+.git/
+.vscode/
+
+# Файлы логов (отчеты об ошибках)
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Файлы с секретными ключами (пароли и API-ключи ИИ читать не нужно)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Папки с отчетами о тестировании (если используете)
+coverage/
