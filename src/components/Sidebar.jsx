@@ -23,7 +23,7 @@ export default function Sidebar() {
       className="bg-white/30 backdrop-blur-md shadow-md p-4 h-screen overflow-hidden"
     >
       <div className="flex justify-between items-center mb-6">
-        {!collapsed && <h2 className="text-xl font-bold text-gray-800">Меню</h2>}
+        {!collapsed && <h2 className="text-xl font-bold text-blue-800 whitespace-nowrap">LiquidGlass Tasks</h2>}
         <button
           onClick={() => dispatch(toggleSideBar())}
           className="p-1 rounded hover:bg-white/50 transition"
@@ -49,4 +49,3 @@ export default function Sidebar() {
     </motion.aside>
   );
 }
-

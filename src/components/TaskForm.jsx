@@ -11,12 +11,14 @@ const TaskForm = () => {
     const [title, setTitle] = useState(task?.title ?? "")
     const [dueDate, setDueDate] = useState(task?.dueDate ?? "")
     const [description, setDescription] = useState(task?.description ?? "")
+    const [error, setError] = useState(false);
+
     const dispatch = useDispatch();
     const formRef = useRef(null);
     const handleSubmit = (e) => {
         e.preventDefault();
         if (title === "") {
-            alert("Нужно заполнить данные!!!")
+            setError(true);
             return
         }
         if (!task) {
@@ -41,12 +43,12 @@ const TaskForm = () => {
     };
 
     useEffect(() => {
-        const hendleClickOutside = (e) => {
+        const handleClickOutside = (e) => {
             if(formRef.current && !formRef.current.contains(e.target)) dispatch(closeModal());
         }
-        addEventListener('mousedown', hendleClickOutside);
+        addEventListener('mousedown', handleClickOutside);
         return () => {
-            removeEventListener('mousedown', hendleClickOutside);
+            removeEventListener('mousedown', handleClickOutside);
         }
     }, [dispatch])
 
@@ -59,12 +61,14 @@ const TaskForm = () => {
                 ref={formRef} 
                 className="bg-slate-500 rounded-3xl p-8 shadow-xl max-w-md w-full text-white min-h-[300px]">
                     <input 
-                        className="text-black rounded p-1 w-full" 
+                        className={`text-black rounded p-1 w-full border-2 ${error ? 'border-red-500' : 'border-transparent'}`} 
                         value={title} 
-                        onChange={(e) => setTitle(e.target.value)} 
+                        onChange={(e) => {setTitle(e.target.value); setError(false);}} 
                         placeholder="Название"/>
+                    {error && <p className="text-red-300 text-xs mt-1">Название обязательно для заполнения</p>}
+                    
                     <textarea 
-                        className="text-black rounded w-full mt-4 p-1" 
+                        className="text-black rounded w-full mt-4 p-1 min-h-[100px]" 
                         value={description} 
                         onChange={(e) => setDescription(e.target.value)} 
                         placeholder="Описание задачи"/>

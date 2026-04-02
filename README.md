@@ -1,12 +1,40 @@
-# React + Vite
+# LiquidGlass Tasks
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Стильный и функциональный менеджер задач, выполненный в эстетике **Glassmorphism** (стекломорфизм). Проект разработан на современном стеке технологий с фокусом на плавность интерфейса и удобство пользователя.
 
-Currently, two official plugins are available:
+## 🚀 Ключевые особенности
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+*   **Glassmorphism UI**: Элегантный дизайн с использованием `backdrop-blur` и полупрозрачных элементов.
+*   **Инлайновое редактирование**: Редактируйте название, описание и дату выполнения задачи прямо в списке без открытия лишних окон.
+*   **Управление состоянием**: Глобальный стейт на **Redux Toolkit** для предсказуемого поведения данных.
+*   **Persistent Storage**: Автоматическая синхронизация с `localStorage` — ваши задачи не пропадут после перезагрузки страницы.
+*   **Плавные анимации**: Интерактивный Sidebar и переходы реализованы с помощью **Framer Motion**.
+*   **Фильтрация**: Удобная сортировка задач по статусу: "Все", "Активные" и "Выполненные".
 
-## Expanding the ESLint configuration
+## 🛠 Технологический стек
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+*   **Frontend**: React 19, Vite
+*   **State Management**: Redux Toolkit, React-Redux
+*   **Styling**: Tailwind CSS
+*   **Animations**: Framer Motion
+*   **Icons**: Lucide React, React Icons
+*   **Deployment**: GitHub Pages
+
+## 📦 Установка и запуск
+
+1. Клонируйте репозиторий:
+   ```bash
+   git clone https://github.com/Laos22/todo-liquid-glass.git
+   ```
+2. Перейдите в папку проекта:
+   ```bash
+   cd todo-liquid-glass
+   ```
+3. Установите зависимости:
+   ```bash
+   npm install
+   ```
+4. Запустите сервер для разработки:
+   ```bash
+   npm run dev
+   ```

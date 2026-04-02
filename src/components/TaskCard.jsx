@@ -3,7 +3,7 @@ import { MdEdit } from 'react-icons/md';   // Material Design
 import { useDispatch } from 'react-redux';
 import { removeTask, toggleCheckedTask, editTask } from '../features/tasks/tasksSlice';
 import { openModalEdit } from '../features/modal/modalSlice';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import '../styles/liquid-glass.css';
 
@@ -17,6 +17,13 @@ export const TaskCard = ({ title, description, id, dueDate, checked, dateCreated
   const [tempDesc, setTempDesc] = useState(description);
   const [isEditingDate, setIsEditingDate] = useState(false);
   const [tempDate, setTempDate] = useState(dueDate);
+
+  // Синхронизация локального состояния с Redux (на случай правок через модалку)
+  useEffect(() => {
+    setTempTitle(title);
+    setTempDesc(description);
+    setTempDate(dueDate);
+  }, [title, description, dueDate]);
 
   const handleTitleSave = () => {
     if (tempTitle.trim() !== "" && tempTitle !== title) {
