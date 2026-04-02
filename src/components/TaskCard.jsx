@@ -15,6 +15,8 @@ export const TaskCard = ({ title, description, id, dueDate, checked, dateCreated
   const [tempTitle, setTempTitle] = useState(title);
   const [isEditingDesc, setIsEditingDesc] = useState(false);
   const [tempDesc, setTempDesc] = useState(description);
+  const [isEditingDate, setIsEditingDate] = useState(false);
+  const [tempDate, setTempDate] = useState(dueDate);
 
   const handleTitleSave = () => {
     if (tempTitle.trim() !== "" && tempTitle !== title) {
@@ -34,12 +36,20 @@ export const TaskCard = ({ title, description, id, dueDate, checked, dateCreated
     setIsEditingDesc(false);
   };
 
+  const handleDateSave = () => {
+    if (tempDate !== dueDate) {
+      dispatch(editTask({ id, dueDate: tempDate }));
+    }
+    setIsEditingDate(false);
+  };
+
   const handleKeyDown = (e, type) => {
     if (e.key === 'Enter') {
       e.target.blur(); // Триггерит onBlur (сохранение)
     } else if (e.key === 'Escape') {
       if (type === 'title') { setTempTitle(title); setIsEditingTitle(false); }
-      else { setTempDesc(description); setIsEditingDesc(false); }
+      else if (type === 'desc') { setTempDesc(description); setIsEditingDesc(false); }
+      else if (type === 'date') { setTempDate(dueDate); setIsEditingDate(false); }
     }
   };
 
@@ -94,7 +104,24 @@ export const TaskCard = ({ title, description, id, dueDate, checked, dateCreated
         <span className='font-bold'>Создано:</span>
         <span>{new Date(dateCreated).toLocaleDateString()}</span>
         <span className='mt-1 font-bold'>Исполнение:</span>
-        <span>{dueDate ? new Date(dueDate).toLocaleDateString() : 'Не указано'}</span>
+        {isEditingDate ? (
+          <input
+            autoFocus
+            type="date"
+            className="text-xs bg-white/20 border-b border-blue-400 outline-none text-gray-800 rounded px-1"
+            value={tempDate}
+            onChange={(e) => setTempDate(e.target.value)}
+            onBlur={handleDateSave}
+            onKeyDown={(e) => handleKeyDown(e, 'date')}
+          />
+        ) : (
+          <span 
+            onClick={() => setIsEditingDate(true)} 
+            className="cursor-pointer hover:bg-white/10 px-1 rounded transition-colors"
+          >
+            {dueDate ? new Date(dueDate).toLocaleDateString() : 'Не указано'}
+          </span>
+        )}
       </div>
       <div className='flex flex-col justify-start'>
         <button 
