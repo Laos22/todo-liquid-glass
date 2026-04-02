@@ -1,15 +1,48 @@
 import { FaTrash } from 'react-icons/fa'; // FontAwesome
 import { MdEdit } from 'react-icons/md';   // Material Design
 import { useDispatch } from 'react-redux';
-import { removeTask, toggleCheckedTask } from '../features/tasks/tasksSlice';
+import { removeTask, toggleCheckedTask, editTask } from '../features/tasks/tasksSlice';
 import { openModalEdit } from '../features/modal/modalSlice';
+import { useState } from 'react';
 
 import '../styles/liquid-glass.css';
-// import { useState } from 'react';
 
 export const TaskCard = ({ title, description, id, dueDate, checked, dateCreated }) => {
   const dispatch = useDispatch()
-  // const [isChecked, setIsChecked] = useState(checked)
+
+  // Состояния для инлайнового редактирования
+  const [isEditingTitle, setIsEditingTitle] = useState(false);
+  const [tempTitle, setTempTitle] = useState(title);
+  const [isEditingDesc, setIsEditingDesc] = useState(false);
+  const [tempDesc, setTempDesc] = useState(description);
+
+  const handleTitleSave = () => {
+    if (tempTitle.trim() !== "" && tempTitle !== title) {
+      dispatch(editTask({ id, title: tempTitle.trim() }));
+    } else {
+      setTempTitle(title);
+    }
+    setIsEditingTitle(false);
+  };
+
+  const handleDescSave = () => {
+    if (tempDesc !== description) {
+      dispatch(editTask({ id, description: tempDesc.trim() }));
+    } else {
+      setTempDesc(description);
+    }
+    setIsEditingDesc(false);
+  };
+
+  const handleKeyDown = (e, type) => {
+    if (e.key === 'Enter') {
+      e.target.blur(); // Триггерит onBlur (сохранение)
+    } else if (e.key === 'Escape') {
+      if (type === 'title') { setTempTitle(title); setIsEditingTitle(false); }
+      else { setTempDesc(description); setIsEditingDesc(false); }
+    }
+  };
+
   return (
     <div className="flex liquid-glass p-3 m-3">
       <input
@@ -21,8 +54,41 @@ export const TaskCard = ({ title, description, id, dueDate, checked, dateCreated
         }} 
         checked={checked}/>
       <div className='flex-1 flex flex-col justify-center'>
-        <h3 className={`text-xl font-semibold`}>{title}</h3>
-        <p className={`text-opacity-80`}>{description}</p>
+        {isEditingTitle ? (
+          <input
+            autoFocus
+            className="text-xl font-semibold bg-white/20 border-b border-blue-400 outline-none w-full"
+            value={tempTitle}
+            onChange={(e) => setTempTitle(e.target.value)}
+            onBlur={handleTitleSave}
+            onKeyDown={(e) => handleKeyDown(e, 'title')}
+          />
+        ) : (
+          <h3 
+            onClick={() => setIsEditingTitle(true)}
+            className={`text-xl font-semibold cursor-text hover:bg-white/10 transition-colors ${checked ? 'line-through opacity-50' : ''}`}
+          >
+            {title}
+          </h3>
+        )}
+
+        {isEditingDesc ? (
+          <textarea
+            autoFocus
+            className="text-sm bg-white/20 border-b border-blue-400 outline-none w-full resize-none mt-1"
+            value={tempDesc}
+            onChange={(e) => setTempDesc(e.target.value)}
+            onBlur={handleDescSave}
+            onKeyDown={(e) => handleKeyDown(e, 'desc')}
+          />
+        ) : (
+          <p 
+            onClick={() => setIsEditingDesc(true)}
+            className={`text-opacity-80 cursor-text hover:bg-white/10 min-h-[1.5em] ${checked ? 'line-through opacity-50' : ''}`}
+          >
+            {description || <span className="italic opacity-40">Добавить описание...</span>}
+          </p>
+        )}
       </div>
       <div className='flex flex-col p-1 text-gray-600 text-xs mt-1'>
         <span className='font-bold'>Создано:</span>
