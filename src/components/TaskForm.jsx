@@ -25,8 +25,8 @@ const TaskForm = () => {
             dispatch(addTask({
                 title,
                 dueDate, 
-                description, 
-                id: Date.now(),
+                description,
+                id: crypto.randomUUID(),
                 dateCreated: Date.now(), 
                 checked: false}))
         } else {
@@ -46,9 +46,9 @@ const TaskForm = () => {
         const handleClickOutside = (e) => {
             if(formRef.current && !formRef.current.contains(e.target)) dispatch(closeModal());
         }
-        addEventListener('mousedown', handleClickOutside);
+        document.addEventListener('mousedown', handleClickOutside);
         return () => {
-            removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener('mousedown', handleClickOutside);
         }
     }, [dispatch])
 

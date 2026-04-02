@@ -1,5 +1,4 @@
 import { CalendarDays, CalendarClock, CheckCircle, ChevronLeft, ChevronRight } from 'lucide-react';
-// eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleSideBar } from '../features/sideBar/sideBarSlice';
