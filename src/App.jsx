@@ -1,16 +1,20 @@
 
 
-
 import Layout from './components/Layout';
+import { useAuth } from './context/AuthContext.jsx';
+import AuthCard from './components/AuthCard.jsx';
 
-import './styles/index.css'
+import './styles/index.css' 
 import './styles/liquid-glass.css';
 
 const App = () => {
-  
-  // console.log("render App")
+  const { user, loginWithGoogle, logout, loading } = useAuth();
+
   return (
-    <Layout/>
+    <>
+    {user ? <Layout /> : <AuthCard />}
+    
+    </>
   );
 }
 

@@ -3,11 +3,14 @@ import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleSideBar } from '../features/sideBar/sideBarSlice';
 import { setFilter } from '../features/filter/filterSlice';
+import { useAuth } from '../context/AuthContext.jsx';
 
 export default function Sidebar() {
   const collapsed = useSelector((state) => state.sideBar);
   const filter = useSelector((state) => state.filter);
   const dispatch = useDispatch();
+  const { user, logout } = useAuth();
+
 
   const items = [
     { key: 'all', label: 'Все задачи', Icon: CalendarDays },
@@ -19,7 +22,7 @@ export default function Sidebar() {
       initial={{ width: collapsed ? 64 : 256 }}
       animate={{ width: collapsed ? 64 : 256 }}
       transition={{ duration: 0.3 }}
-      className="bg-white/30 backdrop-blur-md shadow-md p-4 h-screen overflow-hidden"
+      className="bg-white/30 backdrop-blur-md shadow-md p-4 h-screen overflow-hidden flex flex-col"
     >
       <div className="flex justify-between items-center mb-6">
         {!collapsed && <h2 className="text-xl font-bold text-blue-800 whitespace-nowrap">LiquidGlass Tasks</h2>}
@@ -31,6 +34,9 @@ export default function Sidebar() {
         </button>
       </div>
 
+      <div className="flex justify-between items-center mb-6">
+        {user && <img src={user.photoURL} alt={user.displayName} className="w-10 h-10 rounded-full mr-3" />}
+      </div>
       <ul className="space-y-3 animate-[fade]">
         {items.map(({ key, label, Icon }) => (
           <li key={key}>
@@ -45,6 +51,12 @@ export default function Sidebar() {
           </li>
         ))}
       </ul>
+      <button
+        onClick={logout}
+        className="mt-auto w-full py-2 px-4 rounded bg-red-500 text-white hover:bg-red-600 transition"
+      >
+        Выйти
+      </button>
     </motion.aside>
   );
 }
