@@ -91,12 +91,21 @@ const tasksSlice = createSlice({
         // Мы фильтруем массив: оставляем все задачи, КРОМЕ той, ID которой пришел в action.payload
         return state.filter(task => task.id !== action.payload);
       })
-    .addCase(toggleTaskStatusDB.fulfilled, (state, action) => {
-      const { taskId, checked } = action.payload;
+    .addCase(toggleTaskStatusDB.pending, (state, action) => {
+      const { taskId, currentStatus } = action.meta.arg; // Достаем данные из аргумента, который мы передали в toggleTaskStatusDB
       // Находим задачу в массиве и меняем ей статус
       const task = state.find(t => t.id === taskId);
       if (task) {
-        task.checked = checked;
+        task.checked = !currentStatus; // Оптимистично меняем статус в UI, не дожидаясь ответа от сервера
+      }
+    })
+    .addCase(toggleTaskStatusDB.rejected, (state, action) => {
+      const { taskId, currentStatus } = action.meta.arg;
+      const task = state.find(t => t.id === taskId);
+      if (task) {
+        // Возвращаем как было, если сервер выдал ошибку
+        task.checked = currentStatus;
+        alert('Ошибка при сохранении! Статус возвращен назад.');
       }
     })
     .addCase(updateTaskDetailsDB.fulfilled, (state, action) => {

@@ -1,8 +1,8 @@
 import { FaTrash } from 'react-icons/fa'; // FontAwesome
 import { MdEdit } from 'react-icons/md';   // Material Design
 import { useDispatch } from 'react-redux';
-import { removeTask, toggleCheckedTask, editTask } from '../features/tasks/tasksSlice';
-import { openModalEdit } from '../features/modal/modalSlice';
+// import { removeTask, toggleCheckedTask, editTask } from '../features/tasks/tasksSlice';
+// import { openModalEdit } from '../features/modal/modalSlice';
 import { useState, useEffect } from 'react';
 import { removeTaskDB, toggleTaskStatusDB, updateTaskDetailsDB } from '../features/tasks/tasksSlice';
 
@@ -28,7 +28,7 @@ export const TaskCard = ({ title, description, id, dueDate, checked, dateCreated
 
   const handleTitleSave = () => {
     if (tempTitle.trim() !== "" && tempTitle !== title) {
-      dispatch(editTask({ id, title: tempTitle.trim() }));
+      dispatch(updateTaskDetailsDB({ taskId: id, updatedData: { title: tempTitle.trim() } }));
     } else {
       setTempTitle(title);
     }
@@ -37,7 +37,7 @@ export const TaskCard = ({ title, description, id, dueDate, checked, dateCreated
 
   const handleDescSave = () => {
     if (tempDesc !== description) {
-      dispatch(editTask({ id, description: tempDesc.trim() }));
+      dispatch(updateTaskDetailsDB({ taskId: id, updatedData: { description: tempDesc.trim() } }));
     } else {
       setTempDesc(description);
     }
@@ -46,7 +46,7 @@ export const TaskCard = ({ title, description, id, dueDate, checked, dateCreated
 
   const handleDateSave = () => {
     if (tempDate !== dueDate) {
-      dispatch(editTask({ id, dueDate: tempDate }));
+      dispatch(updateTaskDetailsDB({ taskId: id, updatedData: { dueDate: tempDate } }));
     }
     setIsEditingDate(false);
   };
@@ -69,13 +69,12 @@ export const TaskCard = ({ title, description, id, dueDate, checked, dateCreated
   }
 
   return (
-    <div className="flex liquid-glass p-3 m-3">
+    <div className="flex items-center liquid-glass p-3 m-3">
       <input
-          type="checkbox"
-          checked={task.checked}
-          onChange={handleToggle}
-          className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
-        />
+        className='w-5 h-5 mx-5 cursor-pointer' 
+        type="checkbox"
+        onChange={handleToggle} 
+        checked={checked}/>
       <div className='flex-1 flex flex-col justify-center'>
         {isEditingTitle ? (
           <input
@@ -142,12 +141,6 @@ export const TaskCard = ({ title, description, id, dueDate, checked, dateCreated
           onClick={() => dispatch(removeTaskDB(id))}
           >
           <FaTrash/>
-        </button>
-        <button 
-          className="p-1 rounded-full hover:bg-gray-100"
-          onClick={() => dispatch(openModalEdit(id))}
-          >
-          <MdEdit/>
         </button>
       </div>
     </div>
