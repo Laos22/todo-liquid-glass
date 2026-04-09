@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { removeTask, toggleCheckedTask, editTask } from '../features/tasks/tasksSlice';
 import { openModalEdit } from '../features/modal/modalSlice';
 import { useState, useEffect } from 'react';
+import { removeTaskDB, toggleTaskStatusDB, updateTaskDetailsDB } from '../features/tasks/tasksSlice';
 
 import '../styles/liquid-glass.css';
 
@@ -60,16 +61,21 @@ export const TaskCard = ({ title, description, id, dueDate, checked, dateCreated
     }
   };
 
+  const handleToggle = () => {
+    dispatch(toggleTaskStatusDB({
+      taskId: id,
+      currentStatus: checked
+    }))
+  }
+
   return (
     <div className="flex liquid-glass p-3 m-3">
       <input
-        className='w-5 h-5 m-3' 
-        type="checkbox"
-        onChange={() => {
-          // setIsChecked(!isChecked)
-          dispatch(toggleCheckedTask(id))
-        }} 
-        checked={checked}/>
+          type="checkbox"
+          checked={task.checked}
+          onChange={handleToggle}
+          className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+        />
       <div className='flex-1 flex flex-col justify-center'>
         {isEditingTitle ? (
           <input
@@ -133,7 +139,7 @@ export const TaskCard = ({ title, description, id, dueDate, checked, dateCreated
       <div className='flex flex-col justify-start'>
         <button 
           className="p-1 rounded-full hover:bg-gray-100"
-          onClick={() => dispatch(removeTask(id))}
+          onClick={() => dispatch(removeTaskDB(id))}
           >
           <FaTrash/>
         </button>

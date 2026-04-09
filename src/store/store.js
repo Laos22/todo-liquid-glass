@@ -15,6 +15,6 @@ export const store = configureStore({
 
 store.subscribe(() => {
   const state = store.getState();
-  localStorage.setItem("tasks", JSON.stringify(state.tasks));
+  // localStorage.setItem("tasks", JSON.stringify(state.tasks));
   localStorage.setItem("sideBar", JSON.stringify(state.sideBar));
 });

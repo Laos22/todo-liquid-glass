@@ -1,11 +1,23 @@
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useAuth } from '../context/AuthContext.jsx';
+import { fetchTasks } from '../features/tasks/tasksSlice';
 import { TaskCard } from './TaskCard';
 
 export default function TaskList() {
   const tasks = useSelector((state) => state.tasks);
   const filter = useSelector((state) => state.filter);
+  const { user } = useAuth();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (user) {
+      dispatch(fetchTasks(user.uid));
+    }
+  }, [dispatch, user]);
 
   const filteredTasks = tasks.filter((task) => {
+    if (!task) return false;
     if (filter === 'active') return !task.checked;
     if (filter === 'completed') return task.checked;
     return true;

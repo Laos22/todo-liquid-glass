@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { closeModal } from "../features/modal/modalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { addTask, editTask } from "../features/tasks/tasksSlice";
+import { addNewTask } from "../features/tasks/tasksSlice";
+import { useAuth } from "../context/AuthContext.jsx";
 
 
 const TaskForm = () => {
@@ -12,6 +14,7 @@ const TaskForm = () => {
     const [dueDate, setDueDate] = useState(task?.dueDate ?? "")
     const [description, setDescription] = useState(task?.description ?? "")
     const [error, setError] = useState(false);
+    const { user } = useAuth();
 
     const dispatch = useDispatch();
     const formRef = useRef(null);
@@ -22,13 +25,15 @@ const TaskForm = () => {
             return
         }
         if (!task) {
-            dispatch(addTask({
-                title,
-                dueDate, 
-                description,
-                id: crypto.randomUUID(),
-                dateCreated: Date.now(), 
-                checked: false}))
+            dispatch(addNewTask({
+            userId: user.uid, // Берем только строку ID пользователя
+            title: title,
+            dueDate: dueDate,
+            description: description,
+            dateCreated: Date.now(),
+            checked: false
+            // Поле 'id' мы сюда не пишем, Firebase сам его создаст!
+        }));
         } else {
             dispatch(editTask({
                 title,

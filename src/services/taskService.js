@@ -16,21 +16,11 @@ import {
 const TASKS_COLLECTION = "tasks";
 
 
-export const addTaskToDB = async (text, userId) => {
+export const addTaskToDB = async (taskData) => {
   try {
-    // Формируем объект задачи
-    const newTask = {
-      text: text,
-      completed: false,
-      userId: userId, // Критически важно! Привязываем к юзеру
-      createdAt: new Date().toISOString(), // Сохраняем время создания
-    };
-
-    // Отправляем в коллекцию "tasks"
-    const docRef = await addDoc(collection(db, TASKS_COLLECTION), newTask);
-    
-    // Возвращаем задачу + уникальный ID, который сгенерировал Firebase
-    return { id: docRef.id, ...newTask };
+    const docRef = await addDoc(collection(db, TASKS_COLLECTION), taskData);
+    // Возвращаем объект обратно, добавив к нему сгенерированный Firebase ID
+    return { id: docRef.id, ...taskData }; 
   } catch (error) {
     console.error("Ошибка при добавлении задачи: ", error);
   }
