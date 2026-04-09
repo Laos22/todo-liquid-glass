@@ -56,40 +56,18 @@ export const updateTaskDetailsDB = createAsyncThunk(
 const tasksSlice = createSlice({
   name: 'tasks',
   initialState,
-  reducers: {
-    addTask: (tasks, action) => {
-      tasks.push(action.payload);
-    },
-    removeTask: (tasks, action) => {
-      console.log("del: " + action.payload)
-      return tasks.filter(task => task.id !== action.payload);
-    },
-    toggleCheckedTask: (state, action) => {
-      const task = state.find(task => task.id === action.payload);
-      if (task) {
-        task.checked = !task.checked;
-      }
-    },
-    editTask: (tasks, action) => {
-      console.log("edit: " + action.payload.id)
-      // const {id, title, description, dueDate} =action
-      return tasks.map(task =>
-        task.id === action.payload.id ? {...task, ...action.payload} : task
-      );
-    }
-  },
   extraReducers: (builder) => {
-    builder.addCase(addNewTask.fulfilled, (state, action) => {
+    builder.addCase(addNewTask.pending, (state, action) => {
       // Когда Firebase скажет "Успешно", мы просто пушим задачу в массив
-      state.push(action.payload); 
+      state.push(action.meta.arg); // arg — это то, что мы передали в addNewTask (новая задача)
     })
     .addCase(fetchTasks.fulfilled, (state, action) => {
         // Мы берем пустой массив стейта и ЗАМЕНЯЕМ его на массив с сервера (action.payload)
         return action.payload; 
       })
-    .addCase(removeTaskDB.fulfilled, (state, action) => {
+    .addCase(removeTaskDB.pending, (state, action) => {
         // Мы фильтруем массив: оставляем все задачи, КРОМЕ той, ID которой пришел в action.payload
-        return state.filter(task => task.id !== action.payload);
+        return state.filter(task => task.id !== action.meta.arg);
       })
     .addCase(toggleTaskStatusDB.pending, (state, action) => {
       const { taskId, currentStatus } = action.meta.arg; // Достаем данные из аргумента, который мы передали в toggleTaskStatusDB
@@ -108,8 +86,8 @@ const tasksSlice = createSlice({
         alert('Ошибка при сохранении! Статус возвращен назад.');
       }
     })
-    .addCase(updateTaskDetailsDB.fulfilled, (state, action) => {
-    const { taskId, updatedData } = action.payload;
+    .addCase(updateTaskDetailsDB.pending, (state, action) => {
+    const { taskId, updatedData } = action.meta.arg;
     const index = state.findIndex(t => t.id === taskId);
     if (index !== -1) {
       // Склеиваем старые данные задачи с новыми

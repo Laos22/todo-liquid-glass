@@ -11,9 +11,6 @@ const modalSlice = createSlice({
             state.show = true
             state.editId = null},
         closeModal: state => {state.show = false},
-        // openModalEdit: (state, action) => {
-        //     state.show = true
-        //     state.editId = action.payload}
     }
 })
 
