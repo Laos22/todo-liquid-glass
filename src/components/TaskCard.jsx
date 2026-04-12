@@ -69,9 +69,9 @@ export const TaskCard = ({ title, description, id, dueDate, checked, dateCreated
   }
 
   return (
-    <div className="flex items-center liquid-glass p-3 m-3">
+    <div className="flex items-center liquid-glass p-3 m-3 overflow-auto">
       <input
-        className='w-5 h-5 mx-5 cursor-pointer' 
+        className='w-5 h-5 mx-2 md:mx-5 cursor-pointer' 
         type="checkbox"
         onChange={handleToggle} 
         checked={checked}/>
@@ -79,7 +79,7 @@ export const TaskCard = ({ title, description, id, dueDate, checked, dateCreated
         {isEditingTitle ? (
           <input
             autoFocus
-            className="text-xl font-semibold bg-white/20 border-b border-blue-400 outline-none w-full"
+            className="text-xl  font-semibold bg-white/20 border-b border-blue-400 outline-none w-full"
             value={tempTitle}
             onChange={(e) => setTempTitle(e.target.value)}
             onBlur={handleTitleSave}
@@ -113,9 +113,9 @@ export const TaskCard = ({ title, description, id, dueDate, checked, dateCreated
         )}
       </div>
       <div className='flex flex-col p-1 text-gray-600 text-xs mt-1'>
-        <span className='font-bold'>Создано:</span>
+        {/* <span className='font-bold'>Создано:</span>
         <span>{new Date(dateCreated).toLocaleDateString()}</span>
-        <span className='mt-1 font-bold'>Исполнение:</span>
+        <span className='mt-1 font-bold'>Исполнение:</span> */}
         {isEditingDate ? (
           <input
             autoFocus
