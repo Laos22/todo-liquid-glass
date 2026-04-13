@@ -11,7 +11,7 @@ const Layout = () => {
   const showModal = useSelector((state) => state.modal.show);
   // console.log("render Layout")
   return (
-    <div className="flex flex-col   h-screenflex h-screen overflow-hidden">
+    <div className="flex flex-col h-screen overflow-hidden">
       <Header />
     <div className="flex flex-1 overflow-auto">
       <Sidebar />
