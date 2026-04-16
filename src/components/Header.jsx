@@ -17,7 +17,7 @@ const Header = () => {
             onClick={() => dispatch(toggleSideBar())}
             className="p-1 rounded hover:bg-white/50 transition mx-2"
             >
-            {collapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
+            ☰
             </button>
             <h2 className="text-xl font-bold text-blue-800 whitespace-nowrap mx-2">LiquidGlass Tasks</h2>
         </nav>

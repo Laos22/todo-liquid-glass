@@ -69,7 +69,7 @@ export const TaskCard = ({ title, description, id, dueDate, checked, dateCreated
   }
 
   return (
-    <div className="flex items-center liquid-glass p-3 m-3 overflow-auto">
+    <div className="flex items-center liquid-glass p-3 m-3 shrink-0 overflow-auto">
       <input
         className='w-5 h-5 mx-2 md:mx-5 cursor-pointer' 
         type="checkbox"

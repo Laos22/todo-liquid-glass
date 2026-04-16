@@ -8,7 +8,7 @@ export default function Sidebar() {
   const collapsed = useSelector((state) => state.sideBar);
   const filter = useSelector((state) => state.filter);
   const dispatch = useDispatch();
-  const { user, logout } = useAuth();
+  const {logout } = useAuth();
 
 
   const items = [
@@ -17,32 +17,36 @@ export default function Sidebar() {
     { key: 'completed', label: 'Выполненные', Icon: CheckCircle },
   ];
   return (
-    <motion.aside
-      initial={{ width: collapsed ? 64 : 256 }}
-      animate={{ width: collapsed ? 64 : 256 }}
-      transition={{ duration: 0.3 }}
-      className="bg-white/30 backdrop-blur-md shadow-md p-4 flex flex-col"
+    <aside
+    
+      className={`bg-gray-200/30 backdrop-blur-md shadow-md 
+                  transition-all duration-300 overflow-hidden
+                  ${collapsed ? "w-0 border-r-0" : "w-full md:w-64"}
+                  `
+      }
     >
-      <ul className="space-y-3 animate-[fade] whitespace-nowrap flex-1">
-        {items.map(({ key, label, Icon }) => (
-          <li key={key}>
-            <button
-              type="button"
-              onClick={() => dispatch(setFilter(key))}
-              className={`flex items-center w-full text-left ${filter === key ? 'text-blue-700 font-semibold' : 'text-gray-700 hover:text-black'}`}
-            >
-              <Icon className="mr-2" size={18} />
-              {!collapsed && label}
-            </button>
-          </li>
-        ))}
-      </ul>
-      <button
-        onClick={logout}
-        className="mt-auto w-full p-2 rounded bg-red-500 text-white hover:bg-red-600 transition"
-      >
-        {collapsed ? "x" : 'Выйти'}
-      </button>
-    </motion.aside>
+      <div className="h-full w-64 flex flex-col justify-center p-4 border-b shrink-0">
+        <ul className="space-y-3 animate-[fade] whitespace-nowrap flex-1">
+          {items.map(({ key, label, Icon }) => (
+            <li key={key}>
+              <button
+                type="button"
+                onClick={() => dispatch(setFilter(key))}
+                className={`flex items-center w-full text-left ${filter === key ? 'text-blue-700 font-semibold' : 'text-gray-700 hover:text-black'}`}
+              >
+                <Icon className="mr-2" size={18} />
+                {label}
+              </button>
+            </li>
+          ))}
+        </ul>
+        <button
+          onClick={logout}
+          className="mt-auto w-full p-2 rounded bg-red-500 text-white hover:bg-red-600 transition"
+        >
+        Выйти
+        </button>
+      </div>
+    </aside>
   );
 }
