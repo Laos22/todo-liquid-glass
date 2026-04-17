@@ -15,9 +15,18 @@ const Header = () => {
         <nav className="flex items-center">
             <button
             onClick={() => dispatch(toggleSideBar())}
-            className="p-1 rounded hover:bg-white/50 transition mx-2"
+            className="p-2 rounded hover:bg-white/50 transition mx-2 flex items-center justify-center"
             >
-            ☰
+            <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                strokeWidth={2} 
+                stroke="currentColor" 
+                className="w-7 h-7 text-blue-800" // Цвет берем такой же, как у заголовка
+            >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
             </button>
             <h2 className="text-xl font-bold text-blue-800 whitespace-nowrap mx-2">LiquidGlass Tasks</h2>
         </nav>
